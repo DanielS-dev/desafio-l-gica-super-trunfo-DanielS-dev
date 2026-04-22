@@ -159,6 +159,30 @@ Carta lerCartas(){
     return carta;
 }
 
+int menu(){
+    printf("\nEscolha uma opção de comparação de atributos:\n\n");
+    printf("Sair - 0\n");
+    printf("População - 1\n");
+    printf("Área em KM- 2\n");
+    printf("PIB - 3\n");
+    printf("Número de Pontos Turísticos - 4\n");
+    printf("Densidade Populacional - 5\n\n");
+    printf("PIB per Capita - 6\n\n");
+
+    int opcao;
+
+    printf("Digite a opção desejada: ");
+    scanf("%i", &opcao);
+    while (scanf("%i", &opcao) != 1) {
+        limparBuffer();
+        printf("Entrada inválida! Digite um número: ");
+    }
+
+    printf("\n");
+
+    return opcao;
+}
+
 int main () {
     setlocale(LC_ALL, ".UTF-8");
 
@@ -167,223 +191,266 @@ int main () {
     cartas[0] = lerCartas();
     cartas[1] = lerCartas();
 
-    //Menu
-    printf("\nEscolha uma opção de comparação de atributos:\n\n");
-    printf("Nome do País - 1\n");
-    printf("População - 2\n");
-    printf("Área - 3\n");
-    printf("PIB - 4\n");
-    printf("Número de Pontos Turísticos - 5\n");
-    printf("Densidade Populacional - 6\n\n");
+    //Mostrando as Cartas registradas
+    printf("\nCartas Cadastradas:\n");
 
-    int opcao, opcao2, cartaVencedora = 0, somaDosAtributos, somaDosAtributos2;
-    int pontosCarta1 = 0, pontosCarta2 = 0;
+    for (int i = 0; i < sizeof(cartas) / sizeof(cartas[0]); i++){
+        printf("\nCarta número %i!\n\n", (i+1) );
 
-    printf("Digite a opção desejada: ");
-    scanf("%i", &opcao);
-    printf("\n");
-
-    switch (opcao) {
-    case 1:
-        printf("País 1: %s", cartas[0].nomeDaCidade);
-        printf("País 2: %s", cartas[1].nomeDaCidade);
-        break;
-    case 2:
-        printf("\n\nAgora escolha um segundo atributo para comparação!\n");
-        printf("Área - 1\n");
-        printf("PIB - 2\n");
-        printf("Número de Pontos Turísticos - 3\n");
-        printf("Densidade Populacional - 4\n\n");
-
-        scanf("%i", &opcao2);
-        switch (opcao2) {
-        case 1:
-            compararDuasCaractecristicas("População", "Área em KM²",
-                cartas[0].populacao, cartas[1].populacao,
-                cartas[0].areaEmKM, cartas[1].areaEmKM, 
-                &pontosCarta1, &pontosCarta2);
-            break;
-        case 2:
-            compararDuasCaractecristicas("População", "PIB",
-                cartas[0].populacao, cartas[1].populacao,
-                cartas[0].PIB, cartas[1].PIB, 
-                &pontosCarta1, &pontosCarta2);
-            break;
-        case 3:
-            compararDuasCaractecristicas("População", "Número de Pontos Turísticos",
-                cartas[0].populacao, cartas[1].populacao,
-                cartas[0].numeroDePontosTuristicos, cartas[1].numeroDePontosTuristicos, 
-                &pontosCarta1, &pontosCarta2);
-            break;
-        case 4:
-            compararDuasCaractecristicas("População", "Densidade Populacional",
-                cartas[0].populacao, cartas[1].populacao,
-                cartas[0].densidadePopulacional, cartas[1].densidadePopulacional, 
-                &pontosCarta1, &pontosCarta2);
-            break;
-        
-        default:
-            printf("Opção Invalida!");
-            break;
-        }
-        break;
-    case 3:
-        printf("\n\nAgora escolha um segundo atributo para comparação!\n");
-        printf("População - 1\n");
-        printf("PIB - 2\n");
-        printf("Número de Pontos Turísticos - 3\n");
-        printf("Densidade Populacional - 4\n\n");
-
-        scanf("%i", &opcao2);
-        switch (opcao2)
-        {
-        case 1:
-            compararDuasCaractecristicas("População", "Área em KM²",
-                cartas[0].populacao, cartas[1].populacao,
-                cartas[0].areaEmKM, cartas[1].areaEmKM, 
-                &pontosCarta1, &pontosCarta2);
-            break;
-        case 2:
-            compararDuasCaractecristicas("PIB", "Área em KM²",
-                cartas[0].PIB, cartas[1].PIB,
-                cartas[0].areaEmKM, cartas[1].areaEmKM, 
-                &pontosCarta1, &pontosCarta2);
-            break;
-        case 3:
-            compararDuasCaractecristicas("Número de Pontos Turísticos", "Área em KM²",
-                cartas[0].numeroDePontosTuristicos, cartas[1].numeroDePontosTuristicos,
-                cartas[0].areaEmKM, cartas[1].areaEmKM, 
-                &pontosCarta1, &pontosCarta2);
-            break;
-        case 4:
-            compararDuasCaractecristicas("Densidade Populacional", "Área em KM²",
-                cartas[0].densidadePopulacional, cartas[1].densidadePopulacional,
-                cartas[0].areaEmKM, cartas[1].areaEmKM, 
-                &pontosCarta1, &pontosCarta2);
-            break;
-        default:
-            printf("Opção Invalida!");
-            break;
-        }
-        break;
-    case 4:
-        printf("\n\nAgora escolha um segundo atributo para comparação!\n");
-        printf("Área - 1\n");
-        printf("População - 2\n");
-        printf("Número de Pontos Turísticos - 3\n");
-        printf("Densidade Populacional - 4\n\n");
-
-        scanf("%i", &opcao2);
-        switch (opcao2)
-        {
-        case 1:
-            compararDuasCaractecristicas("PIB", "Área em KM²",
-                cartas[0].PIB, cartas[1].PIB,
-                cartas[0].areaEmKM, cartas[1].areaEmKM, 
-                &pontosCarta1, &pontosCarta2);
-            break;
-        case 2:
-            compararDuasCaractecristicas("População", "PIB",
-                cartas[0].populacao, cartas[1].populacao,
-                cartas[0].PIB, cartas[1].PIB, 
-                &pontosCarta1, &pontosCarta2);
-            break;
-        case 3:
-            compararDuasCaractecristicas("PIB", "Número de Pontos Turísticos",
-                cartas[0].PIB, cartas[1].PIB,
-                cartas[0].numeroDePontosTuristicos, cartas[1].numeroDePontosTuristicos, 
-                &pontosCarta1, &pontosCarta2);
-            break;
-        case 4:
-            compararDuasCaractecristicas("PIB", "Densidade Populacional",
-                cartas[0].PIB, cartas[1].PIB,
-                cartas[0].densidadePopulacional, cartas[1].densidadePopulacional, 
-                &pontosCarta1, &pontosCarta2);
-            break;
-        
-        default:
-            printf("Opção Invalida!");
-            break;
-        }
-        break;
-    case 5:
-        printf("\n\nAgora escolha um segundo atributo para comparação!\n");
-        printf("Área - 1\n");
-        printf("PIB - 2\n");
-        printf("População - 3\n");
-        printf("Densidade Populacional - 4\n\n");
-
-        scanf("%i", &opcao2);
-        switch (opcao2)
-        {
-        case 1:
-            compararDuasCaractecristicas("Número de Pontos Turísticos", "Área em KM²",
-                cartas[0].numeroDePontosTuristicos, cartas[1].numeroDePontosTuristicos,
-                cartas[0].areaEmKM, cartas[1].areaEmKM, 
-                &pontosCarta1, &pontosCarta2);
-            break;
-        case 2:
-            compararDuasCaractecristicas("Número de Pontos Turísticos", "PIB",
-                cartas[0].numeroDePontosTuristicos, cartas[1].numeroDePontosTuristicos,
-                cartas[0].PIB, cartas[1].PIB, 
-                &pontosCarta1, &pontosCarta2);
-            break;
-        case 3:
-            compararDuasCaractecristicas("População", "Número de Pontos Turísticos",
-                cartas[0].populacao, cartas[1].populacao,
-                cartas[0].numeroDePontosTuristicos, cartas[1].numeroDePontosTuristicos, 
-                &pontosCarta1, &pontosCarta2);
-            break;
-        case 4:
-            compararDuasCaractecristicas("Número de Pontos Turísticos", "Densidade Populacional",
-                cartas[0].numeroDePontosTuristicos, cartas[1].numeroDePontosTuristicos,
-                cartas[0].densidadePopulacional, cartas[1].densidadePopulacional, 
-                &pontosCarta1, &pontosCarta2);
-            break;
-        default:
-            printf("Opção Invalida!");
-            break;
-        }
-        break;
-    case 6:
-        printf("\n\nAgora escolha um segundo atributo para comparação!\n");
-        printf("Área - 1\n");
-        printf("PIB - 2\n");
-        printf("Número de Pontos Turísticos - 3\n");
-        printf("População - 4\n\n");
-
-        scanf("%i", &opcao2);
-        switch (opcao2)
-        {
-        case 1:
-            compararDuasCaractecristicas("Densidade Populacional", "Área em KM²",
-                cartas[0].densidadePopulacional, cartas[1].densidadePopulacional,
-                cartas[0].areaEmKM, cartas[1].areaEmKM, 
-                &pontosCarta1, &pontosCarta2);
-            break;
-        case 2:
-            compararDuasCaractecristicas("Densidade Populacional", "PIB",
-                cartas[0].densidadePopulacional, cartas[1].densidadePopulacional,
-                cartas[0].PIB, cartas[1].PIB, 
-                &pontosCarta1, &pontosCarta2);
-            break;
-        case 3:
-            compararDuasCaractecristicas("Densidade Populacional", "Número de Pontos Turísticos",
-                cartas[0].densidadePopulacional, cartas[1].densidadePopulacional,
-                cartas[0].numeroDePontosTuristicos, cartas[1].numeroDePontosTuristicos, 
-                &pontosCarta1, &pontosCarta2);
-            break;
-        case 4:
-            compararDuasCaractecristicas("População", "Densidade Populacional",
-                cartas[0].populacao, cartas[1].populacao,
-                cartas[0].densidadePopulacional, cartas[1].densidadePopulacional, 
-                &pontosCarta1, &pontosCarta2);
-            break;        
-        default:
-            printf("Opção Invalida!");
-            break;
-        }
-        break;
+        printf("Estado: %s\n", cartas[i].estado);
+        printf("Código da Carta: %s\n", cartas[i].codigoDaCarta);
+        printf("Nome da Cidade: %s\n", cartas[i].nomeDaCidade);
+        printf("Quantidade da População: %lu\n", cartas[i].populacao);
+        printf("Área em KM: %.2f\n", cartas[i].areaEmKM);
+        printf("PIB: %.2f\n", cartas[i].PIB);
+        printf("Número de Pontos Turísticos: %i\n", cartas[i].numeroDePontosTuristicos);
+        printf("Densidade Populacional: %.2f\n", cartas[i].densidadePopulacional);
+        printf("PIB per Capita: %.2f\n", cartas[i].PIBPerCapita);
     }
+
+    int opcao;
+
+    do {
+        int pontosCarta1 = 0, pontosCarta2 = 0, opcao2;
+        opcao = menu();
+        
+        switch (opcao) {
+        case 0:
+            break;
+        case 1:
+            printf("\n\nAgora escolha um segundo atributo para comparação!\n");
+            printf("Área - 1\n");
+            printf("PIB - 2\n");
+            printf("Número de Pontos Turísticos - 3\n");
+            printf("Densidade Populacional - 4\n");
+            printf("PIB per Capita - 5\n\n");
+
+            scanf("%i", &opcao2);
+            switch (opcao2) {
+            case 1:
+                compararDuasCaractecristicas("População", "Área em KM²",
+                    cartas[0].populacao, cartas[1].populacao,
+                    cartas[0].areaEmKM, cartas[1].areaEmKM, 
+                    &pontosCarta1, &pontosCarta2);
+                break;
+            case 2:
+                compararDuasCaractecristicas("População", "PIB",
+                    cartas[0].populacao, cartas[1].populacao,
+                    cartas[0].PIB, cartas[1].PIB, 
+                    &pontosCarta1, &pontosCarta2);
+                break;
+            case 3:
+                compararDuasCaractecristicas("População", "Número de Pontos Turísticos",
+                    cartas[0].populacao, cartas[1].populacao,
+                    cartas[0].numeroDePontosTuristicos, cartas[1].numeroDePontosTuristicos, 
+                    &pontosCarta1, &pontosCarta2);
+                break;
+            case 4:
+                compararDuasCaractecristicas("População", "Densidade Populacional",
+                    cartas[0].populacao, cartas[1].populacao,
+                    cartas[0].densidadePopulacional, cartas[1].densidadePopulacional, 
+                    &pontosCarta1, &pontosCarta2);
+                break;
+            case 5:
+                    compararDuasCaractecristicas("População", "PIB per Capita",
+                    cartas[0].populacao, cartas[1].populacao,
+                    cartas[0].PIBPerCapita, cartas[1].PIBPerCapita,
+                    &pontosCarta1, &pontosCarta2);
+                break;
+            default:
+                printf("Opção Invalida!");
+                break;
+            }
+            break;
+        case 2:
+            printf("\n\nAgora escolha um segundo atributo para comparação!\n");
+            printf("População - 1\n");
+            printf("PIB - 2\n");
+            printf("Número de Pontos Turísticos - 3\n");
+            printf("Densidade Populacional - 4\n");
+            printf("PIB per Capita - 5\n\n");
+
+            scanf("%i", &opcao2);
+            switch (opcao2)
+            {
+            case 1:
+                compararDuasCaractecristicas("População", "Área em KM²",
+                    cartas[0].populacao, cartas[1].populacao,
+                    cartas[0].areaEmKM, cartas[1].areaEmKM, 
+                    &pontosCarta1, &pontosCarta2);
+                break;
+            case 2:
+                compararDuasCaractecristicas("PIB", "Área em KM²",
+                    cartas[0].PIB, cartas[1].PIB,
+                    cartas[0].areaEmKM, cartas[1].areaEmKM, 
+                    &pontosCarta1, &pontosCarta2);
+                break;
+            case 3:
+                compararDuasCaractecristicas("Número de Pontos Turísticos", "Área em KM²",
+                    cartas[0].numeroDePontosTuristicos, cartas[1].numeroDePontosTuristicos,
+                    cartas[0].areaEmKM, cartas[1].areaEmKM, 
+                    &pontosCarta1, &pontosCarta2);
+                break;
+            case 4:
+                compararDuasCaractecristicas("Densidade Populacional", "Área em KM²",
+                    cartas[0].densidadePopulacional, cartas[1].densidadePopulacional,
+                    cartas[0].areaEmKM, cartas[1].areaEmKM, 
+                    &pontosCarta1, &pontosCarta2);
+                break;
+            case 5:
+                    compararDuasCaractecristicas("Área em KM²", "PIB per Capita",
+                    cartas[0].areaEmKM, cartas[1].areaEmKM,
+                    cartas[0].PIBPerCapita, cartas[1].PIBPerCapita,
+                    &pontosCarta1, &pontosCarta2);
+                break;
+            default:
+                printf("Opção Invalida!");
+                break;
+            }
+            break;
+        case 3:
+            printf("\n\nAgora escolha um segundo atributo para comparação!\n");
+            printf("Área - 1\n");
+            printf("População - 2\n");
+            printf("Número de Pontos Turísticos - 3\n");
+            printf("Densidade Populacional - 4\n");
+            printf("PIB per Capita - 5 \n\n");
+
+            scanf("%i", &opcao2);
+            switch (opcao2)
+            {
+            case 1:
+                compararDuasCaractecristicas("PIB", "Área em KM²",
+                    cartas[0].PIB, cartas[1].PIB,
+                    cartas[0].areaEmKM, cartas[1].areaEmKM, 
+                    &pontosCarta1, &pontosCarta2);
+                break;
+            case 2:
+                compararDuasCaractecristicas("População", "PIB",
+                    cartas[0].populacao, cartas[1].populacao,
+                    cartas[0].PIB, cartas[1].PIB, 
+                    &pontosCarta1, &pontosCarta2);
+                break;
+            case 3:
+                compararDuasCaractecristicas("PIB", "Número de Pontos Turísticos",
+                    cartas[0].PIB, cartas[1].PIB,
+                    cartas[0].numeroDePontosTuristicos, cartas[1].numeroDePontosTuristicos, 
+                    &pontosCarta1, &pontosCarta2);
+                break;
+            case 4:
+                compararDuasCaractecristicas("PIB", "Densidade Populacional",
+                    cartas[0].PIB, cartas[1].PIB,
+                    cartas[0].densidadePopulacional, cartas[1].densidadePopulacional, 
+                    &pontosCarta1, &pontosCarta2);
+                break;
+            case 5:
+                    compararDuasCaractecristicas("PIB", "PIB per Capita",
+                    cartas[0].PIB cartas[1].PIB,
+                    cartas[0].PIBPerCapita, cartas[1].PIBPerCapita,
+                    &pontosCarta1, &pontosCarta2);
+                break;
+            default:
+                printf("Opção Invalida!");
+                break;
+            }
+            break;
+        case 4:
+            printf("\n\nAgora escolha um segundo atributo para comparação!\n");
+            printf("Área - 1\n");
+            printf("PIB - 2\n");
+            printf("População - 3\n");
+            printf("Densidade Populacional - 4\n");
+            printf("PIB per Capita - 5 \n\n");
+
+            scanf("%i", &opcao2);
+            switch (opcao2)
+            {
+            case 1:
+                compararDuasCaractecristicas("Número de Pontos Turísticos", "Área em KM²",
+                    cartas[0].numeroDePontosTuristicos, cartas[1].numeroDePontosTuristicos,
+                    cartas[0].areaEmKM, cartas[1].areaEmKM, 
+                    &pontosCarta1, &pontosCarta2);
+                break;
+            case 2:
+                compararDuasCaractecristicas("Número de Pontos Turísticos", "PIB",
+                    cartas[0].numeroDePontosTuristicos, cartas[1].numeroDePontosTuristicos,
+                    cartas[0].PIB, cartas[1].PIB, 
+                    &pontosCarta1, &pontosCarta2);
+                break;
+            case 3:
+                compararDuasCaractecristicas("População", "Número de Pontos Turísticos",
+                    cartas[0].populacao, cartas[1].populacao,
+                    cartas[0].numeroDePontosTuristicos, cartas[1].numeroDePontosTuristicos, 
+                    &pontosCarta1, &pontosCarta2);
+                break;
+            case 4:
+                compararDuasCaractecristicas("Número de Pontos Turísticos", "Densidade Populacional",
+                    cartas[0].numeroDePontosTuristicos, cartas[1].numeroDePontosTuristicos,
+                    cartas[0].densidadePopulacional, cartas[1].densidadePopulacional, 
+                    &pontosCarta1, &pontosCarta2);
+                break;
+            case 5:
+                    compararDuasCaractecristicas("Número de Pontos Turísticos", "PIB per Capita",
+                    cartas[0].numeroDePontosTuristicos, cartas[1].numeroDePontosTuristicos,
+                    cartas[0].PIBPerCapita, cartas[1].PIBPerCapita,
+                    &pontosCarta1, &pontosCarta2);
+                break;
+            default:
+                printf("Opção Invalida!");
+                break;
+            }
+            break;
+        case 5:
+            printf("\n\nAgora escolha um segundo atributo para comparação!\n");
+            printf("Área - 1\n");
+            printf("PIB - 2\n");
+            printf("Número de Pontos Turísticos - 3\n");
+            printf("População - 4\n");
+            printf("PIB per Capita - 5\n\n");
+
+            scanf("%i", &opcao2);
+            switch (opcao2)
+            {
+            case 1:
+                compararDuasCaractecristicas("Densidade Populacional", "Área em KM²",
+                    cartas[0].densidadePopulacional, cartas[1].densidadePopulacional,
+                    cartas[0].areaEmKM, cartas[1].areaEmKM, 
+                    &pontosCarta1, &pontosCarta2);
+                break;
+            case 2:
+                compararDuasCaractecristicas("Densidade Populacional", "PIB",
+                    cartas[0].densidadePopulacional, cartas[1].densidadePopulacional,
+                    cartas[0].PIB, cartas[1].PIB, 
+                    &pontosCarta1, &pontosCarta2);
+                break;
+            case 3:
+                compararDuasCaractecristicas("Densidade Populacional", "Número de Pontos Turísticos",
+                    cartas[0].densidadePopulacional, cartas[1].densidadePopulacional,
+                    cartas[0].numeroDePontosTuristicos, cartas[1].numeroDePontosTuristicos, 
+                    &pontosCarta1, &pontosCarta2);
+                break;
+            case 4:
+                compararDuasCaractecristicas("População", "Densidade Populacional",
+                    cartas[0].populacao, cartas[1].populacao,
+                    cartas[0].densidadePopulacional, cartas[1].densidadePopulacional, 
+                    &pontosCarta1, &pontosCarta2);
+                break;
+            case 5:
+                    compararDuasCaractecristicas("Densidade Populacional", "PIB per Capita",
+                    cartas[0].densidadePopulacional, cartas[1].densidadePopulacional,
+                    cartas[0].PIBPerCapita, cartas[1].PIBPerCapita,
+                    &pontosCarta1, &pontosCarta2);
+                break; 
+            default:
+                printf("Opção Invalida!");
+                break;
+            }
+            break;
+        default:
+            printf("Opção Invalida!");
+            system("pause");
+        }
+    } while (opcao < 0 || opcao > 6);
+
 return 0;
 }
