@@ -4,7 +4,7 @@
 #include <string.h>
 
 typedef struct {
-    char estado, codigoDaCarta[4], nomeDaCidade[50];
+    char estado[3], codigoDaCarta[3], nomeDaCidade[51];
     int numeroDePontosTuristicos;
     unsigned long int populacao;
     float areaEmKM, PIB, densidadePopulacional, PIBPerCapita;
@@ -26,6 +26,8 @@ void imprimirVencedor(int pontos1, int pontos2){
     if (pontos1 == pontos2) printf("Empate!");
     else if (pontos1 > pontos2) printf("A Carta 1 venceu!");
     else printf("A Carta 2 venceu!");
+
+    system("pause");
 }
 
 void compararDuasCaractecristicas(
@@ -51,34 +53,104 @@ void compararDuasCaractecristicas(
  
 }
 
+void limparBuffer(){
+    while (getchar() != '\n');
+}
+
 Carta lerCartas(){
     Carta carta;
 
     printf("\nDigite os dados da Carta!\n\n");
     
-    printf("Digite o estado da carta: ");
-    scanf(" %c", &carta.estado);
+    printf("Digite o Estado da carta (Abreviação, ex: SP - São Paulo): ");
+    scanf(" %2s", carta.estado);
+    limparBuffer();
 
-    printf("Digite o código da carta: ");
-    scanf(" %s", &carta.codigoDaCarta);
+    while (strlen(carta.estado) != 2){
+        printf("\nO Estado deve ter exatamente 2 caracteres!\n");
+        printf("Digite o estado da carta novamente: ");
+        scanf(" %2s", carta.estado);
+        limparBuffer();
+    }
 
-    while (getchar() != '\n');
-    printf("Digite o nome da cidade: ");
-    fgets(carta.nomeDaCidade, 50, stdin);
+    printf("Digite o Código da carta: ");
+    scanf(" %2s", carta.codigoDaCarta);
+    limparBuffer();
+
+    while (strlen(carta.codigoDaCarta) != 2){
+        printf("\nO código deve ter exatamente 2 caracteres!\n");
+        printf("Digite o código da carta novamente: ");
+        scanf(" %2s", carta.codigoDaCarta);
+        limparBuffer();
+    }
+
+    printf("Digite o Nome da cidade: ");
+    fgets(carta.nomeDaCidade, 51, stdin);
+
+    if (strcspn(carta.nomeDaCidade, "\n") == 50) {
+        limparBuffer();
+    }
 
     carta.nomeDaCidade[strcspn(carta.nomeDaCidade, "\n")] = '\0';
 
-    printf("Digite a quantidade da população da cidade: ");
-    scanf("%lu", &carta.populacao);
+    printf("Digite a quantidade da População da cidade: ");
+    
+    while (scanf("%lu", &carta.populacao) != 1 || carta.populacao == 0){
+        limparBuffer();
 
-    printf("Digite a área da cidade: ");
-    scanf("%f", &carta.areaEmKM);
+        if(carta.populacao == 0){
+            printf("\nA quantidade da População não pode ser 0!\n");
+        } else {
+            printf("\nEntrada Inválida! Digite apenas números.\n");
+        }
+
+        printf("Digite novamente a quantidade da População da cidade: ");
+    }
+
+    limparBuffer();
+
+    printf("Digite a Área em KM da cidade: ");
+
+    while (scanf("%f", &carta.areaEmKM) != 1 || carta.areaEmKM == 0){
+        limparBuffer();
+
+        if(carta.areaEmKM == 0){
+            printf("\nA Área em KM não pode ser 0!\n");
+        } else {
+            printf("\nEntrada Inválida! Digite apenas números.\n");
+        }
+
+        printf("Digite novamente a Área em KM da cidade: ");
+    }
+
+    limparBuffer();
 
     printf("Digite o PIB da cidade: ");
-    scanf("%f", &carta.PIB);
 
-    printf("Digite o numero de pontos turísticos da cidade: ");
-    scanf("%i", &carta.numeroDePontosTuristicos);
+    while (scanf("%f", &carta.PIB) != 1 || carta.PIB == 0){
+        limparBuffer();
+
+        if(carta.PIB == 0){
+            printf("\nA quantidade do PIB não pode ser 0!\n");
+        } else {
+            printf("\nEntrada Inválida! Digite apenas números.\n");
+        }
+
+        printf("Digite novamente a quantidade do PIB da cidade: ");
+    }
+
+    limparBuffer();
+
+    printf("Digite o numero de Pontos Turísticos da cidade: ");
+
+    while (scanf("%i", &carta.numeroDePontosTuristicos) != 1){
+        limparBuffer();
+
+        printf("\nEntrada Inválida! Digite apenas números.\n");
+        printf("Digite novamente a quantidade de Pontos Turísticos da cidade: ");
+    }
+
+    limparBuffer();
 
     carta.densidadePopulacional = (float) carta.populacao / carta.areaEmKM;
     
